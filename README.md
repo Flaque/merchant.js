@@ -107,5 +107,3 @@ import { currencies } from "merchant.js";
 
 currencies(ledgerOne, ledgerTwo, ledgerThree); // ["GOLD", "SILVER", "MAGIC_POWER"]
 ```
-
-### Getting the total of a specific currency

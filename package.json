@@ -10,7 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "immutable": "^3.8.2"
+    "immutable": "^3.8.2",
+    "invariant": "^2.2.2"
   },
   "devDependencies": {
     "jest": "^21.2.1"
