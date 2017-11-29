@@ -1,5 +1,5 @@
 {
-  "name": "merchant",
+  "name": "merchant.js",
   "version": "0.0.0",
   "description": "A tool for creating systems with lots of numbers",
   "main": "src/index.js",
@@ -7,13 +7,16 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "docs": "./node_modules/.bin/documentation build src/** -f html -o docs",
+    "prepublish": "yarn test; yarn docs"
   },
   "dependencies": {
     "immutable": "^3.8.2",
     "invariant": "^2.2.2"
   },
   "devDependencies": {
+    "documentation": "^5.3.3",
     "jest": "^21.2.1"
   }
 }

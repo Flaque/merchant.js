@@ -21,8 +21,8 @@ const throwIfNotMap = (maybeMap, funcName) => {
  * total.get("GOLD");   // 5
  * total.get("SILVER"); // 3
  *
- * @param {Array<Map>} ledgers
- * @return {Map} a ledger combining all values
+ * @param {Array<immutable.Map>} ledgers
+ * @return {immutable.Map} a ledger combining all values
  */
 const add = (...ledgers) => {
   if (!ledgers || ledgers.length === 0) {
@@ -51,9 +51,9 @@ const add = (...ledgers) => {
  * newIncome.get("GOLD");     // 2 * state.numOfSalesfolk
  * newIncome.get("INFLUENCE") // 5 * state.numOfSalesfolk
  *
- * @param {Map} ledger
+ * @param {immutable.Map} ledger
  * @param {Number} scale
- * @return {Map} the updated ledger
+ * @return {immutable.Map} the updated ledger
  */
 const scale = (ledger, scale) => {
   throwIfNotMap(ledger, "scale");
@@ -62,7 +62,7 @@ const scale = (ledger, scale) => {
 
 /**
  * Returns true if all items in the ledger are positive.
- * @param {Map} ledger
+ * @param {immutable.Map} ledger
  * @return {Boolean}
  */
 const inTheBlack = ledger => {
@@ -72,7 +72,7 @@ const inTheBlack = ledger => {
 
 /**
  * Returns true if all items in the ledger are negative.
- * @param {Map} ledger
+ * @param {immutable.Map} ledger
  * @return {Boolean}
  */
 const inTheRed = ledger => {
@@ -82,8 +82,8 @@ const inTheRed = ledger => {
 
 /**
  * Returns all unique currencies defined in several ledgers
- * @param {Array<Map>} ledger
- * @return {List}
+ * @param {Array<immutable.Map>} ledger
+ * @return {immutable.List}
  */
 const currencies = (...ledgers) => {
   if (!ledgers || ledgers.length === 0) {

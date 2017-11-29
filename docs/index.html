@@ -1,0 +1,471 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>merchant 0.0.0 | Documentation</title>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
+  <link href='assets/style.css' type='text/css' rel='stylesheet' />
+  <link href='assets/github.css' type='text/css' rel='stylesheet' />
+  <link href='assets/split.css' type='text/css' rel='stylesheet' />
+</head>
+<body class='documentation m0'>
+    <div class='flex'>
+      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'>merchant</h3>
+          <div class='mb1'><code>0.0.0</code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block input'
+            type='text' />
+          <div id='toc'>
+            <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#add'
+                  class="">
+                  add
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#scale'
+                  class="">
+                  scale
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#intheblack'
+                  class="">
+                  inTheBlack
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#inthered'
+                  class="">
+                  inTheRed
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#currencies'
+                  class="">
+                  currencies
+                  
+                </a>
+                
+                </li>
+              
+            </ul>
+          </div>
+          <div class='mt1 h6 quiet'>
+            <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          </div>
+        </div>
+      </div>
+      <div id='split-right' class='relative overflow-auto height-viewport-100'>
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='add'>
+      add
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Adds an arbitrary amount of ledgers together.</p>
+
+
+  <div class='pre p1 fill-light mt0'>add</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ledgers</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;immutable.Map>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>immutable.Map</code>:
+        a ledger combining all values
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> wallet = <span class="hljs-built_in">Map</span>({<span class="hljs-attr">GOLD</span>: <span class="hljs-number">0</span>});
+<span class="hljs-keyword">const</span> expensesLedger = <span class="hljs-built_in">Map</span>({<span class="hljs-attr">GOLD</span>: <span class="hljs-number">-5</span>});
+<span class="hljs-keyword">const</span> profitsLedger = <span class="hljs-built_in">Map</span>({<span class="hljs-attr">GOLD</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">Silver</span>: <span class="hljs-number">3</span> });
+
+<span class="hljs-keyword">const</span> total = add(wallet, expensesLedger, profitsLedger);
+total.get(<span class="hljs-string">"GOLD"</span>);   <span class="hljs-comment">// 5</span>
+total.get(<span class="hljs-string">"SILVER"</span>); <span class="hljs-comment">// 3</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='scale'>
+      scale
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Multiplies all currency values in a ledger by the scale. This is quite
+useful for when you want to multiply the effects of an item by the amount
+of that item.</p>
+
+
+  <div class='pre p1 fill-light mt0'>scale</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ledger</span> <code class='quiet'>(immutable.Map)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>scale</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>immutable.Map</code>:
+        the updated ledger
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> incomeFromSalesfolk = <span class="hljs-built_in">Map</span>({<span class="hljs-attr">GOLD</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">INFLUENCE</span>: <span class="hljs-number">5</span>});
+<span class="hljs-keyword">const</span> newIncome = scale(incomeFromSalesFolk, state.numOfSalesfolk);
+
+newIncome.get(<span class="hljs-string">"GOLD"</span>);     <span class="hljs-comment">// 2 * state.numOfSalesfolk</span>
+newIncome.get(<span class="hljs-string">"INFLUENCE"</span>) <span class="hljs-comment">// 5 * state.numOfSalesfolk</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='intheblack'>
+      inTheBlack
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns true if all items in the ledger are positive.</p>
+
+
+  <div class='pre p1 fill-light mt0'>inTheBlack</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ledger</span> <code class='quiet'>(immutable.Map)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='inthered'>
+      inTheRed
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns true if all items in the ledger are negative.</p>
+
+
+  <div class='pre p1 fill-light mt0'>inTheRed</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ledger</span> <code class='quiet'>(immutable.Map)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='currencies'>
+      currencies
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns all unique currencies defined in several ledgers</p>
+
+
+  <div class='pre p1 fill-light mt0'>currencies</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ledgers</span> <code class='quiet'>(...any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ledger</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;immutable.Map>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>immutable.List</code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+      </div>
+    </div>
+  <script src='assets/anchor.js'></script>
+  <script src='assets/split.js'></script>
+  <script src='assets/site.js'></script>
+</body>
+</html>
