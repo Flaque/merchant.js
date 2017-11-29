@@ -45,7 +45,7 @@ by adding several ledgers together.
 
 You can generally think of all other ledgers as "updates" to your wallet.
 
-## Helpers
+# Merchant Functions
 
 ### Adding Ledgers Together
 
