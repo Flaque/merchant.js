@@ -73,6 +73,16 @@
                 
                 </li>
               
+                
+                <li><a
+                  href='#totalof'
+                  class="">
+                  totalOf
+                  
+                </a>
+                
+                </li>
+              
             </ul>
           </div>
           <div class='mt1 h6 quiet'>
@@ -150,6 +160,10 @@
 <span class="hljs-keyword">const</span> total = add(wallet, expensesLedger, profitsLedger);
 total.get(<span class="hljs-string">"GOLD"</span>);   <span class="hljs-comment">// 5</span>
 total.get(<span class="hljs-string">"SILVER"</span>); <span class="hljs-comment">// 3</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> ledgers = [wallet, expenses, profits];
+<span class="hljs-keyword">const</span> total = add(...ledgers);</pre>
     
   
 
@@ -451,6 +465,84 @@ newIncome.get(<span class="hljs-string">"INFLUENCE"</span>) <span class="hljs-co
 
   
 
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='totalof'>
+      totalOf
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Gets the currency value of a particular currency given several ledgers.
+This is useful for finding the cost of something spread over several different
+ledgers.</p>
+
+
+  <div class='pre p1 fill-light mt0'>totalOf</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>currency</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ledgers</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;immutable.Map>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> materialCost = <span class="hljs-built_in">Map</span>({<span class="hljs-attr">GOLD</span>: <span class="hljs-number">-5</span>, <span class="hljs-attr">SILVER</span>: <span class="hljs-number">-2</span>});
+<span class="hljs-keyword">const</span> transportCost = <span class="hljs-built_in">Map</span>({GOLD <span class="hljs-number">-2</span>});
+<span class="hljs-keyword">const</span> goldCost = totalOf(<span class="hljs-string">"GOLD"</span>, materialCost, transportCost); <span class="hljs-comment">// -7</span></pre>
+    
   
 
   

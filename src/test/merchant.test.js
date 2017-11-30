@@ -1,4 +1,11 @@
-const { add, scale, inTheBlack, inTheRed, currencies } = require("../index.js");
+const {
+  add,
+  scale,
+  inTheBlack,
+  inTheRed,
+  currencies,
+  totalOf
+} = require("../index.js");
 const { Map, List } = require("immutable");
 
 describe("add", () => {
@@ -124,5 +131,23 @@ describe("currencies", () => {
     const sortedExpected = List(["GOLD", "SILVER"]).sort();
 
     expect(sortedResult.equals(sortedExpected)).toBe(true);
+  });
+});
+
+describe("totalOf", () => {
+  test("totalOf will throw if it receives something that's not a Map", () => {
+    expect(() => totalOf("HAHAHA", { NOTA: "ledger" })).toThrow();
+  });
+
+  test("totalOf will give you 0 if the currency doesn't exist", () => {
+    const one = Map({ GOLD: 5 });
+    const two = Map({ SILVER: 5 });
+    expect(totalOf("MAGIC_POWER", one, two)).toBe(0);
+  });
+
+  test("totalOf will add up a row correctly", () => {
+    const one = Map({ GOLD: 5 });
+    const two = Map({ SILVER: 5, GOLD: 2 });
+    expect(totalOf("GOLD", one, two)).toBe(7);
   });
 });

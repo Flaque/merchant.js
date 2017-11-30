@@ -1,6 +1,10 @@
 const { Map, List } = require("immutable");
 const invariant = require("invariant");
 
+const maybe = (item, def) => {
+  return item || def;
+};
+
 const throwIfNotMap = (maybeMap, funcName) => {
   // Really simple check to make sure we're only using maps
   invariant(
@@ -20,6 +24,10 @@ const throwIfNotMap = (maybeMap, funcName) => {
  * const total = add(wallet, expensesLedger, profitsLedger);
  * total.get("GOLD");   // 5
  * total.get("SILVER"); // 3
+ *
+ * @example
+ * const ledgers = [wallet, expenses, profits];
+ * const total = add(...ledgers);
  *
  * @param {Array<immutable.Map>} ledgers
  * @return {immutable.Map} a ledger combining all values
@@ -99,10 +107,33 @@ const currencies = (...ledgers) => {
   return mergedLedgers.keySeq().toList();
 };
 
+/**
+ * Gets the currency value of a particular currency given several ledgers.
+ * This is useful for finding the cost of something spread over several different
+ * ledgers.
+ *
+ * @example
+ * const materialCost = Map({GOLD: -5, SILVER: -2});
+ * const transportCost = Map({GOLD -2});
+ * const goldCost = totalOf("GOLD", materialCost, transportCost); // -7
+ *
+ * @param {String} currency
+ * @param {Array<immutable.Map>} ledgers
+ */
+const totalOf = (currency, ...ledgers) => {
+  if (!ledgers || ledgers.length === 0) {
+    return 0;
+  }
+  throwIfNotMap(ledgers[0], "totalOf");
+
+  return maybe(add(...ledgers).get(currency), 0);
+};
+
 module.exports = {
   add,
   scale,
   inTheBlack,
   inTheRed,
-  currencies
+  currencies,
+  totalOf
 };
