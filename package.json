@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "immutable": "^3.8.2",
-    "invariant": "^2.2.2"
+    "invariant": "^2.2.2",
+    "is-function": "^1.0.1"
   },
   "devDependencies": {
     "documentation": "^5.3.3",

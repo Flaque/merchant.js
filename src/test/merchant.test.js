@@ -4,7 +4,9 @@ const {
   inTheBlack,
   inTheRed,
   currencies,
-  totalOf
+  totalOf,
+  buy,
+  addItem
 } = require("../index.js");
 const { Map, List } = require("immutable");
 
@@ -149,5 +151,46 @@ describe("totalOf", () => {
     const one = Map({ GOLD: 5 });
     const two = Map({ SILVER: 5, GOLD: 2 });
     expect(totalOf("GOLD", one, two)).toBe(7);
+  });
+});
+
+describe("buy", () => {
+  const MagicSword = {
+    type: "MagicSword",
+    cost: () =>
+      Map({
+        GOLD: -5
+      })
+  };
+
+  test("buy will throw if it receives an item with a cost attribute that's not a function", () => {
+    expect(() => buy({ cost: "ya", type: "ha" })).toThrow();
+  });
+
+  test("buy will reduce the amount of currency if our cost is a negative ledger", () => {
+    const newWallet = buy(MagicSword, Map({ GOLD: 10 }));
+    expect(newWallet.get("GOLD")).toBe(5);
+  });
+
+  test("buy will return a negative balance when we can't afford an item", () => {
+    const wallet = buy(MagicSword, Map({ GOLD: 0 }));
+    expect(inTheBlack(wallet)).toBe(false);
+  });
+
+  test("buy will return a positive balance when we can afford an item", () => {
+    const wallet = buy(MagicSword, Map({ GOLD: 99999 }));
+    expect(inTheBlack(wallet)).toBe(true);
+  });
+});
+
+describe("addItem", () => {
+  test("adding an item will update the wallet", () => {
+    const wallet = addItem({ type: "MagicSword" }, Map({}));
+    expect(wallet.get("MagicSword")).toBe(1);
+  });
+
+  test("adding more than one item updates the wallet", () => {
+    const wallet = addItem({ type: "MagicSword" }, Map({}), 5);
+    expect(wallet.get("MagicSword")).toBe(5);
   });
 });

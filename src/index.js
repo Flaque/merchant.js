@@ -1,5 +1,6 @@
 const { Map, List } = require("immutable");
 const invariant = require("invariant");
+const isFunc = require("is-function");
 
 const maybe = (item, def) => {
   return item || def;
@@ -129,11 +130,69 @@ const totalOf = (currency, ...ledgers) => {
   return maybe(add(...ledgers).get(currency), 0);
 };
 
+/**
+ * Buy returns a new wallet after an item is purchased.
+ * If the item is free, it just returns the same wallet.
+ *
+ * @example
+ * const MagicSword = {
+ *   type: "MagicSword",
+ *   cost: state => Map({ GOLD: -(5 + state.marketPrice) })
+ * }
+ *
+ * const wallet = Map({ GOLD: 10 });
+ * const state = { marketPrice : 1 };
+ *
+ * const newWallet = buy(MagicSword, wallet, state); // Gold => 4
+ * const canBuy = inTheBlack(newWallet); // true
+ *
+ * @param {Object} item has at least a "cost" that returns a ledger.
+ * @param {immutable.Map} wallet the current sum of ledgers
+ * @param {Object} state a state object that will be passed to the cost to determine the type
+ */
+const buy = (item, wallet, state = {}) => {
+  if (!item.cost) {
+    return wallet;
+  }
+
+  // Check that the cost is a function
+  invariant(
+    isFunc(item.cost),
+    `The item of type: "${
+      item.type
+    }" has a cost attribute that is not a function.`
+  );
+
+  const cost = item.cost(state);
+
+  // Check that the cost actually returns an immutable Map
+  invariant(
+    Map.isMap(cost),
+    `The item of type: "${
+      item.type
+    }" returns something other than an Immutable.js Map.`
+  );
+
+  return add(item.cost(state), wallet);
+};
+
+/**
+ * Adds an item to the wallet
+ * @param {Object} item
+ * @param {immutable.Map} wallet
+ * @param {Number} amount
+ */
+const addItem = (item, wallet, amount = 1) => {
+  return add(wallet, Map({ [item.type]: amount }));
+};
+
 module.exports = {
   add,
   scale,
   inTheBlack,
   inTheRed,
   currencies,
-  totalOf
+  totalOf,
+  buy,
+  addItem
 };
