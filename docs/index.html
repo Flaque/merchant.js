@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>merchant.js 0.1.1 | Documentation</title>
+  <title>merchant.js 0.2.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>merchant.js</h3>
-          <div class='mb1'><code>0.1.1</code></div>
+          <div class='mb1'><code>0.2.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -22,6 +22,26 @@
             type='text' />
           <div id='toc'>
             <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#maybe'
+                  class="">
+                  maybe
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#throwifnotmap'
+                  class="">
+                  throwIfNotMap
+                  
+                </a>
+                
+                </li>
               
                 
                 <li><a
@@ -103,6 +123,16 @@
                 
                 </li>
               
+                
+                <li><a
+                  href='#poucheffectsledger'
+                  class="">
+                  pouchEffectsLedger
+                  
+                </a>
+                
+                </li>
+              
             </ul>
           </div>
           <div class='mt1 h6 quiet'>
@@ -111,6 +141,143 @@
         </div>
       </div>
       <div id='split-right' class='relative overflow-auto height-viewport-100'>
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='maybe'>
+      maybe
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns the item, or if it's undefined, it returns the "def"ault.</p>
+
+
+  <div class='pre p1 fill-light mt0'>maybe</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>item</span> <code class='quiet'>(Any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>def</span> <code class='quiet'>(Any)</code>
+	    default
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='throwifnotmap'>
+      throwIfNotMap
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Throws an error in development if the <code>maybeMap</code> is not a map.</p>
+
+
+  <div class='pre p1 fill-light mt0'>throwIfNotMap</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>maybeMap</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>funcName</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
         
           
             <section class='p2 mb2 clearfix bg-white minishadow'>
@@ -722,6 +889,85 @@ If the item is free, it just returns the same wallet.</p>
           <div>
             <span class='code bold'>amount</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
             = <code>1</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='poucheffectsledger'>
+      pouchEffectsLedger
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>For a collection of items, combines their "effect" functions into
+one big ledger. This is useful for caching the onUpdate effects to your
+wallet rather than computing them every time.</p>
+
+
+  <div class='pre p1 fill-light mt0'>pouchEffectsLedger</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>items</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>wallet</span> <code class='quiet'>(immutable.Map)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>state</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            = <code>{}</code>)</code>
 	    
           </div>
           
