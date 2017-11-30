@@ -9,6 +9,8 @@ are stored as immuatble objects.
 
 Merchant is really just a collection of patterns with some helpful functions.
 
+[Docs here.](https://flaque.github.io/merchant.js/)
+
 # Overview
 
 ## Currencies
