@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>merchant.js 0.1.0 | Documentation</title>
+  <title>merchant.js 0.1.1 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>merchant.js</h3>
-          <div class='mb1'><code>0.1.0</code></div>
+          <div class='mb1'><code>0.1.1</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -78,6 +78,26 @@
                   href='#totalof'
                   class="">
                   totalOf
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#buy'
+                  class="">
+                  buy
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#additem'
+                  class="">
+                  addItem
                   
                 </a>
                 
@@ -543,6 +563,179 @@ ledgers.</p>
 <span class="hljs-keyword">const</span> transportCost = <span class="hljs-built_in">Map</span>({GOLD <span class="hljs-number">-2</span>});
 <span class="hljs-keyword">const</span> goldCost = totalOf(<span class="hljs-string">"GOLD"</span>, materialCost, transportCost); <span class="hljs-comment">// -7</span></pre>
     
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='buy'>
+      buy
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Buy returns a new wallet after an item is purchased.
+If the item is free, it just returns the same wallet.</p>
+
+
+  <div class='pre p1 fill-light mt0'>buy</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>item</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    has at least a "cost" that returns a ledger.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>wallet</span> <code class='quiet'>(immutable.Map)</code>
+	    the current sum of ledgers
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>state</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            = <code>{}</code>)</code>
+	    a state object that will be passed to the cost to determine the type
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> MagicSword = {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"MagicSword"</span>,
+  <span class="hljs-attr">cost</span>: <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> <span class="hljs-built_in">Map</span>({ <span class="hljs-attr">GOLD</span>: -(<span class="hljs-number">5</span> + state.marketPrice) })
+}
+
+<span class="hljs-keyword">const</span> wallet = <span class="hljs-built_in">Map</span>({ <span class="hljs-attr">GOLD</span>: <span class="hljs-number">10</span> });
+<span class="hljs-keyword">const</span> state = { <span class="hljs-attr">marketPrice</span> : <span class="hljs-number">1</span> };
+
+<span class="hljs-keyword">const</span> newWallet = buy(MagicSword, wallet, state); <span class="hljs-comment">// Gold =&gt; 4</span>
+<span class="hljs-keyword">const</span> canBuy = inTheBlack(newWallet); <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='additem'>
+      addItem
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Adds an item to the wallet</p>
+
+
+  <div class='pre p1 fill-light mt0'>addItem</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>item</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>wallet</span> <code class='quiet'>(immutable.Map)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>amount</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
+            = <code>1</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
   
 
   
