@@ -2,10 +2,18 @@ const { Map, List } = require("immutable");
 const invariant = require("invariant");
 const isFunc = require("is-function");
 
+/**
+ * Returns the item, or if it's undefined, it returns the "def"ault.
+ * @param {Any} item
+ * @param {Any} def default
+ */
 const maybe = (item, def) => {
   return item || def;
 };
 
+/**
+ * Throws an error in development if the `maybeMap` is not a map.
+ */
 const throwIfNotMap = (maybeMap, funcName) => {
   // Really simple check to make sure we're only using maps
   invariant(
@@ -186,6 +194,22 @@ const addItem = (item, wallet, amount = 1) => {
   return add(wallet, Map({ [item.type]: amount }));
 };
 
+/**
+ * For a collection of items, combines their "effect" functions into
+ * one big ledger. This is useful for caching the onUpdate effects to your
+ * wallet rather than computing them every time.
+ *
+ * @param {Array<Object>} items
+ * @param {immutable.Map} wallet
+ * @param {Object} state
+ */
+const pouchEffectsLedger = (items, wallet, state = {}) => {
+  const ledgers = items.map(item => {
+    return scale(item.effect(state), maybe(wallet.get(item.type), 0));
+  });
+  return add(...ledgers);
+};
+
 module.exports = {
   add,
   scale,
@@ -194,5 +218,6 @@ module.exports = {
   currencies,
   totalOf,
   buy,
-  addItem
+  addItem,
+  pouchEffectsLedger
 };

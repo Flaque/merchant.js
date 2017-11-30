@@ -6,7 +6,8 @@ const {
   currencies,
   totalOf,
   buy,
-  addItem
+  addItem,
+  pouchEffectsLedger
 } = require("../index.js");
 const { Map, List } = require("immutable");
 
@@ -192,5 +193,35 @@ describe("addItem", () => {
   test("adding more than one item updates the wallet", () => {
     const wallet = addItem({ type: "MagicSword" }, Map({}), 5);
     expect(wallet.get("MagicSword")).toBe(5);
+  });
+});
+
+describe("pouchEffectsLedger", () => {
+  test("pouchEffectsLedger returns an empty ledger if there are no items", () => {
+    expect(pouchEffectsLedger([], Map({})).size).toBe(0);
+  });
+
+  test("pouchEffectsLedger returns a ledger with a combination of effects", () => {
+    const MagicSword = {
+      type: "MagicSword",
+      effect: state => {
+        return Map({ MAGIC: 2 });
+      }
+    };
+
+    const Charm = {
+      type: "Charm",
+      effect: state => {
+        return Map({ MAGIC: 1, GOLD: 2 });
+      }
+    };
+
+    const ledger = pouchEffectsLedger(
+      [MagicSword, Charm],
+      Map({ MagicSword: 2, Charm: 1 })
+    );
+
+    expect(ledger.get("GOLD")).toBe(2);
+    expect(ledger.get("MAGIC")).toBe(5);
   });
 });
