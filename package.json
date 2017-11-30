@@ -1,6 +1,6 @@
 {
   "name": "merchant.js",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A tool for creating systems with lots of numbers",
   "main": "src/index.js",
   "author": "Flaque",
