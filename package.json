@@ -8,8 +8,7 @@
   "private": false,
   "scripts": {
     "test": "jest",
-    "docs": "./node_modules/.bin/documentation build src/** -f html -o docs",
-    "prepublish": "yarn test; yarn docs"
+    "docs": "./node_modules/.bin/documentation build src/** -f html -o docs"
   },
   "dependencies": {
     "immutable": "^3.8.2",
