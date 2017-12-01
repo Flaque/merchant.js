@@ -1,5 +1,5 @@
 {
-  "name": "create-next-example-app",
+  "name": "merchant-minimal-example",
   "scripts": {
     "dev": "next",
     "build": "next build",
