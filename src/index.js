@@ -2,18 +2,10 @@ const { Map, List } = require("immutable");
 const invariant = require("invariant");
 const isFunc = require("is-function");
 
-/**
- * Returns the item, or if it's undefined, it returns the "def"ault.
- * @param {Any} item
- * @param {Any} def default
- */
 const maybe = (item, def) => {
   return item || def;
 };
 
-/**
- * Throws an error in development if the `maybeMap` is not a map.
- */
 const throwIfNotMap = (maybeMap, funcName) => {
   // Really simple check to make sure we're only using maps
   invariant(
