@@ -4,7 +4,7 @@ Merchant is a system for creating programs that manage changing numbers over
 time. It's especially useful for creating idle games (sometimes called
 incremental games), but could potentially be used in other games or programs.
 
-If you're not sure what an idle game is, [click here to find out](http://www.decisionproblem.com/paperclips/index2.html).
+If you're not sure what an idle game is, [click here to find out](http://www.decisionproblem.com/paperclips/index2.html). Note: If you're trying to be productive right now, that link may not be for you.
 
 Merchant works well with Redux, but doesn't require it. Functions return copies and don't
 modify state. Since Merchant is built on `immutable`, most of it's key concepts
