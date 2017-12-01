@@ -14,7 +14,7 @@ To be frank, Merchant is really just a collection of patterns with some helpful 
 
 [Docs here.](https://flaque.github.io/merchant.js/)
 
-[Live example here.](https://merchant-example.now.sh/)
+[Live example here.](https://merchant-example.now.sh/) 🐶
 
 # Installation
 
