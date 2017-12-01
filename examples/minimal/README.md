@@ -5,12 +5,21 @@ This is a simple example of the
 
 [Live example here.](https://merchant-example.now.sh/)
 
-## Requirements
+## Dependencies
 
-This example requires [next.js](https://github.com/zeit/next.js/). Install with:
+This example is built with [next.js](https://github.com/zeit/next.js/) and
+React. Before running, you should run an install:
+
+With yarn:
 
 ```
-npm install --save next react react-dom
+yarn
+```
+
+With npm:
+
+```
+npm install
 ```
 
 ## Running Example
