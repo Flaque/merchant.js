@@ -1,4 +1,4 @@
-# 💰 Merchant 💰
+# 💰 Merchant.js 💰
 
 Merchant is a system for creating programs that manage changing numbers over
 time. It's especially useful for creating idle games (sometimes called
@@ -13,6 +13,18 @@ are stored as immutable objects.
 To be frank, Merchant is really just a collection of patterns with some helpful functions. It's fairly minimalistic but also gives you a good amount of power without sacrificing efficiency. 
 
 [Docs here.](https://flaque.github.io/merchant.js/)
+
+# Installation
+
+With yarn:
+```sh
+yarn add merchant.js
+```
+
+With npm:
+```sh
+npm install --save merchant.js
+```
 
 # Concepts
 
