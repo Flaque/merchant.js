@@ -1,6 +1,6 @@
 {
   "name": "merchant.js",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A tool for creating systems with lots of numbers",
   "main": "src/index.js",
   "author": "Flaque",
@@ -22,6 +22,10 @@
   "jest": {
     "collectCoverage": true,
     "coverageDirectory": "<rootDir>/coverage",
-    "coveragePathIgnorePatterns": ["/node_modules/", "/templates/", "/dist/"]
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/templates/",
+      "/dist/"
+    ]
   }
 }
