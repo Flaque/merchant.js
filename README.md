@@ -11,7 +11,7 @@ Merchant is really just a collection of patterns with some helpful functions.
 
 [Docs here.](https://flaque.github.io/merchant.js/)
 
-# Overview
+# Concepts
 
 ## Currencies
 
@@ -47,7 +47,66 @@ by adding several ledgers together.
 
 You can generally think of all other ledgers as "updates" to your wallet.
 
-# Merchant Functions
+## Items
+
+An item is something that can be bought and can effect the main ledger. They're
+generally JSON defined in a `pouch` file:
+
+```js
+// pouch.js
+import { GOLD, POWER } from "./currencies";
+
+export const MagicSword = {
+  type: "MagicSword",
+  cost: () => {
+    return Map({ [GOLD]: -5 });
+  }
+  effect: (state) => {
+    return Map({ [POWER]: state.currentPowerLevel });
+  }
+};
+```
+
+An item _must_ have a `type` attribute. It's useful to give it the same name as
+the item itself, but not required.
+
+An item _can_ have a `cost` function that returns a ledger. This is used by the
+`buy` function to determine the cost. Note that value should be negative if you
+want to subtract from your wallet.
+
+An item _can_ have a `effect` function that's used by the `pouchEffectsLedger`
+function to generate an effects ledger.
+
+Both of these functions can take in the "state" if you would like. If you're
+using redux, you can treat these like mini reducers. This is pretty useful if
+you want to make the cost variable over time or a function of how many items you
+own.
+
+To pass the state in, you can just throw it in the `merchant` functions:
+
+```js
+const newWallet = buy(MagicSword, wallet, state);
+const newLedger = pouchEffectsLedger(pouch, wallet, state);
+```
+
+Also note that there's no "amount" or "count" attribute in here, nor is this a
+class with a constructor. Items should not be instantiated. They should not
+store or contain state. They're blueprints, not objects.
+
+The "amount" of the item can be stored in the wallet. So I can have a wallet
+that looks like this:
+
+```js
+const wallet = Map({
+  GOLD: 5,
+  MagicSword: 2
+});
+```
+
+We do this so that calculating a per-tick case without having to run through 10k
+"cost" functions.
+
+# Helpful Merchant Functions
 
 ### Adding Ledgers Together
 
@@ -88,17 +147,6 @@ inTheBlack(Map({ GOLD: 2, SILVER: -10 })); // False
 inTheBlack(Map({ GOLD: 2, SILVER: 10 })); // True
 ```
 
-### Checking all values are negative
-
-Similarly, you can check all values are negative with the `inTheRed` function:
-
-```js
-import { inTheRed } from "merchant.js"
-
-inTheRed(Map({ GOLD: 2, SILVER: -10 }); // False
-inTheRed(Map({ GOLD: -2, SILVER: -10 }); // True
-```
-
 ### Getting Unqiue Currencies
 
 If you would like the currencies defined in an arbitrary collection of ledgers,
@@ -109,3 +157,25 @@ import { currencies } from "merchant.js";
 
 currencies(ledgerOne, ledgerTwo, ledgerThree); // ["GOLD", "SILVER", "MAGIC_POWER"]
 ```
+
+### Buying items
+
+You can charge the wallet with the cost of an item with the `buy` function:
+
+```js
+import { buy } from "merchant.js";
+
+const newWallet = buy(MagicSword, wallet);
+```
+
+Note that you can also pass in your total state too.
+
+```js
+import { buy } from "merchant.js";
+
+const newWallet = buy(MagicSword, wallet, state);
+```
+
+---
+
+Made with ❤️ by [@flaqueeau](https://twitter.com/flaqueeau).
