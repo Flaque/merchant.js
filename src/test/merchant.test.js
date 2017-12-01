@@ -121,6 +121,10 @@ describe("currencies", () => {
     expect(() => currencies({ notA: "ledger" })).toThrow();
   });
 
+  test("currencies returns a list even if nothing is defined", () => {
+    expect(List.isList(currencies())).toBe(true);
+  });
+
   test("currencies returns a list", () => {
     const result = currencies(Map({ GOLD: "5" }));
     expect(List.isList(result)).toBe(true);
@@ -140,6 +144,10 @@ describe("currencies", () => {
 describe("totalOf", () => {
   test("totalOf will throw if it receives something that's not a Map", () => {
     expect(() => totalOf("HAHAHA", { NOTA: "ledger" })).toThrow();
+  });
+
+  test("totalOf will give you 0 if nothing is defined", () => {
+    expect(totalOf()).toBe(0);
   });
 
   test("totalOf will give you 0 if the currency doesn't exist", () => {
@@ -163,6 +171,11 @@ describe("buy", () => {
         GOLD: -5
       })
   };
+
+  test("buy will return the same wallet if nothing is defined", () => {
+    const wallet = Map({ Foo: 5 });
+    expect(buy(null, wallet)).toBe(wallet);
+  });
 
   test("buy will throw if it receives an item with a cost attribute that's not a function", () => {
     expect(() => buy({ cost: "ya", type: "ha" })).toThrow();
@@ -199,6 +212,19 @@ describe("addItem", () => {
 describe("pouchEffectsLedger", () => {
   test("pouchEffectsLedger returns an empty ledger if there are no items", () => {
     expect(pouchEffectsLedger([], Map({})).size).toBe(0);
+  });
+
+  test("pouchEffectsLedger returns an empty ledger if there are no items with 'effects'", () => {
+    const MagicSword = {
+      type: "MagicSword"
+    };
+
+    const ledger = pouchEffectsLedger(
+      [MagicSword],
+      Map({ MagicSword: 2, Charm: 1 })
+    );
+
+    expect(ledger.size).toBe(0);
   });
 
   test("pouchEffectsLedger returns a ledger with a combination of effects", () => {

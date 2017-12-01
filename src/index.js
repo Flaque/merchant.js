@@ -159,7 +159,7 @@ const totalOf = (currency, ...ledgers) => {
  * @param {Object} state a state object that will be passed to the cost to determine the type
  */
 const buy = (item, wallet, state = {}) => {
-  if (!item.cost) {
+  if (!item || !item.cost) {
     return wallet;
   }
 
@@ -204,9 +204,12 @@ const addItem = (item, wallet, amount = 1) => {
  * @param {Object} state
  */
 const pouchEffectsLedger = (items, wallet, state = {}) => {
-  const ledgers = items.map(item => {
-    return scale(item.effect(state), maybe(wallet.get(item.type), 0));
-  });
+  const ledgers = items
+    .map(item => {
+      if (!item.effect) return;
+      return scale(item.effect(state), maybe(wallet.get(item.type), 0));
+    })
+    .filter(n => n);
   return add(...ledgers);
 };
 

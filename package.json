@@ -18,5 +18,10 @@
   "devDependencies": {
     "documentation": "^5.3.3",
     "jest": "^21.2.1"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "<rootDir>/coverage",
+    "coveragePathIgnorePatterns": ["/node_modules/", "/templates/", "/dist/"]
   }
 }
