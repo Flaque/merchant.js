@@ -5,6 +5,16 @@ This is a simple example of the
 
 [Live example here.](https://merchant-example.now.sh/)
 
+## Requirements
+
+This example requires [next.js](https://github.com/zeit/next.js/). Install with:
+
+```
+npm install --save next react react-dom
+```
+
+## Running Example
+
 You run the example by cloning this repo, cd'ing into `examples/minimal` and
 then:
 
