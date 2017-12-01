@@ -115,7 +115,7 @@ const currencies = (...ledgers) => {
  *
  * @example
  * const materialCost = Map({GOLD: -5, SILVER: -2});
- * const transportCost = Map({GOLD -2});
+ * const transportCost = Map({GOLD: -2});
  * const goldCost = totalOf("GOLD", materialCost, transportCost); // -7
  *
  * @param {String} currency
