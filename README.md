@@ -13,7 +13,8 @@ are stored as immutable objects.
 To be frank, Merchant is really just a collection of patterns with some helpful functions. It's fairly minimalistic but also gives you a good amount of power without sacrificing efficiency. 
 
 [Docs here.](https://flaque.github.io/merchant.js/)
-[Live example here.](https://merchant-example.now.sh/)
+
+[Live example here.](https://merchant-example.now.sh/) 🐶
 
 # Installation
 
