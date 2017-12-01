@@ -164,7 +164,7 @@ inTheBlack(Map({ GOLD: 2, SILVER: -10 })); // False
 inTheBlack(Map({ GOLD: 2, SILVER: 10 })); // True
 ```
 
-### Getting Unqiue Currencies
+### Getting Unique Currencies
 
 If you would like the currencies defined in an arbitrary collection of ledgers,
 you can use the `currencies` function:
