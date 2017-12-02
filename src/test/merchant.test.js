@@ -7,7 +7,8 @@ const {
   totalOf,
   buy,
   addItem,
-  pouchEffectsLedger
+  pouchEffectsLedger,
+  cost
 } = require("../index.js");
 const { Map, List } = require("immutable");
 
@@ -249,5 +250,43 @@ describe("pouchEffectsLedger", () => {
 
     expect(ledger.get("GOLD")).toBe(2);
     expect(ledger.get("MAGIC")).toBe(5);
+  });
+});
+
+describe("cost", () => {
+  test("cost will throw if there's a cost attribute that's not a function", () => {
+    const MagicSword = {
+      type: "MagicSword",
+      cost: "buzzwinkle"
+    };
+
+    expect(() => cost(MagicSword)).toThrow();
+  });
+
+  test("cost returns a blank ledger if the item has no cost attribute", () => {
+    const MagicSword = {
+      type: "MagicSword"
+    };
+
+    expect(Map.isMap(cost(MagicSword))).toBe(true);
+    expect(cost(MagicSword).size).toBe(0);
+  });
+
+  test("cost will return the correct result of a cost function", () => {
+    const MagicSword = {
+      type: "MagicSword",
+      cost: () => Map({ GOLD: -5 })
+    };
+
+    expect(cost(MagicSword).get("GOLD")).toBe(-5);
+  });
+
+  test("cost will return a result of a cost function with a state passed in", () => {
+    const MagicSword = {
+      type: "MagicSword",
+      cost: ({ price }) => Map({ GOLD: price })
+    };
+
+    expect(cost(MagicSword, { price: -10 }).get("GOLD")).toBe(-10);
   });
 });

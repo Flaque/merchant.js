@@ -1,18 +1,6 @@
 const { Map, List } = require("immutable");
 const invariant = require("invariant");
-const isFunc = require("is-function");
-
-const maybe = (item, def) => {
-  return item || def;
-};
-
-const throwIfNotMap = (maybeMap, funcName) => {
-  // Really simple check to make sure we're only using maps
-  invariant(
-    Map.isMap(maybeMap),
-    `Merchant's ${funcName} function requires you to use an Immutable Map.`
-  );
-};
+const { maybe, throwIfCostNotFunc, throwIfNotMap } = require("./util");
 
 /**
  * Adds an arbitrary amount of ledgers together.
@@ -131,6 +119,21 @@ const totalOf = (currency, ...ledgers) => {
 };
 
 /**
+ * Given an item, run it's cost function and return the result.
+ * @param {Object} item
+ * @param {Object} state
+ * @return {immutable.Map} a ledger
+ */
+const cost = (item, state = {}) => {
+  if (!item || !item.cost) {
+    return Map();
+  }
+
+  throwIfCostNotFunc(item);
+  return item.cost(state);
+};
+
+/**
  * Buy returns a new wallet after an item is purchased.
  * If the item is free, it just returns the same wallet.
  *
@@ -155,13 +158,7 @@ const buy = (item, wallet, state = {}) => {
     return wallet;
   }
 
-  // Check that the cost is a function
-  invariant(
-    isFunc(item.cost),
-    `The item of type: "${
-      item.type
-    }" has a cost attribute that is not a function.`
-  );
+  throwIfCostNotFunc(item);
 
   const cost = item.cost(state);
 
@@ -214,5 +211,6 @@ module.exports = {
   totalOf,
   buy,
   addItem,
-  pouchEffectsLedger
+  pouchEffectsLedger,
+  cost
 };
