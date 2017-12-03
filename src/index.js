@@ -133,6 +133,13 @@ const cost = (item, state = {}) => {
   return item.cost(state);
 };
 
+/**
+ * Given a bunch of items, figure out all their costs and return it
+ * as an immutable Map
+ * @param {immutable.Map | Object} items
+ * @param {Object} state
+ * @return {immutable.Map} a Map of ledgers where the key is the `item.type`
+ */
 const allCosts = (items, state = {}) => {
   if (!Map.isMap(items) && typeof items === "object") {
     items = Map(items);
