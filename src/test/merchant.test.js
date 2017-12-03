@@ -8,7 +8,8 @@ const {
   buy,
   addItem,
   pouchEffectsLedger,
-  cost
+  cost,
+  allCosts
 } = require("../index.js");
 const { Map, List } = require("immutable");
 
@@ -288,5 +289,67 @@ describe("cost", () => {
     };
 
     expect(cost(MagicSword, { price: -10 }).get("GOLD")).toBe(-10);
+  });
+});
+
+describe("allCosts", () => {
+  const MagicSwordCost = Map({ GOLD: 5 });
+  const CharmCost = Map({ GOLD: 10 });
+
+  test("will return a map of the cost of several items", () => {
+    const MagicSword = {
+      type: "MagicSword",
+      cost: () => MagicSwordCost
+    };
+
+    const Charm = {
+      type: "Charm",
+      cost: () => CharmCost
+    };
+
+    const pouch = {
+      MagicSword,
+      Charm
+    };
+
+    expect(
+      allCosts(pouch)
+        .get("MagicSword")
+        .equals(MagicSwordCost)
+    ).toBe(true);
+
+    expect(
+      allCosts(pouch)
+        .get("Charm")
+        .equals(CharmCost)
+    ).toBe(true);
+  });
+
+  test("will return an empty map if there's no items", () => {
+    expect(allCosts(Map()).size).toBe(0);
+  });
+
+  test("will return an empty map for items that have no cost function", () => {
+    const pouch = {
+      HolyStaff: {
+        type: "HolyStaff"
+      }
+    };
+
+    expect(allCosts(pouch).get("HolyStaff").size).toBe(0);
+  });
+
+  test("can handle a Map being passed in", () => {
+    const pouch = {
+      HolyStaff: {
+        type: "HolyStaff"
+      },
+      MagicSword: {
+        type: "MagicSword",
+        cost: () => Map({ GOLD: 5 })
+      }
+    };
+
+    expect(allCosts(Map(pouch)).size).toBe(2);
   });
 });

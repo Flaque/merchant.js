@@ -133,6 +133,16 @@ const cost = (item, state = {}) => {
   return item.cost(state);
 };
 
+const allCosts = (items, state = {}) => {
+  if (!Map.isMap(items) && typeof items === "object") {
+    items = Map(items);
+  }
+
+  return items.map(item => {
+    return cost(item, state);
+  });
+};
+
 /**
  * Buy returns a new wallet after an item is purchased.
  * If the item is free, it just returns the same wallet.
@@ -212,5 +222,6 @@ module.exports = {
   buy,
   addItem,
   pouchEffectsLedger,
-  cost
+  cost,
+  allCosts
 };
