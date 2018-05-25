@@ -10,7 +10,7 @@ Merchant works well with Redux, but doesn't require it. Functions return copies 
 modify state. Since Merchant is built on `immutable`, most of it's key concepts
 are stored as immutable objects.
 
-To be frank, Merchant is really just a collection of patterns with some helpful functions. It's fairly minimalistic but also gives you a good amount of power without sacrificing efficiency. 
+To be frank, Merchant is really just a collection of patterns with some helpful functions. It's fairly minimalistic but also gives you a good amount of power without sacrificing efficiency.
 
 [Docs here.](https://flaque.github.io/merchant.js/)
 
@@ -19,11 +19,13 @@ To be frank, Merchant is really just a collection of patterns with some helpful 
 # Installation
 
 With yarn:
+
 ```sh
 yarn add merchant.js
 ```
 
 With npm:
+
 ```sh
 npm install --save merchant.js
 ```
@@ -91,7 +93,7 @@ An item _can_ have a `cost` function that returns a ledger. This is used by the
 `buy` function to determine the cost. Note that value should be negative if you
 want to subtract from your wallet.
 
-An item _can_ have a `effect` function that's used by the `pouchEffectsLedger`
+An item _can_ have a `effect` function that's used by the `effects`
 function to generate an effects ledger.
 
 Both of these functions can take in the "state" if you would like. If you're
@@ -103,7 +105,7 @@ To pass the state in, you can just throw it in the `merchant` functions:
 
 ```js
 const newWallet = buy(MagicSword, wallet, state);
-const newLedger = pouchEffectsLedger(pouch, wallet, state);
+const newLedger = effects(pouch, wallet, state);
 ```
 
 Also note that there's no "amount" or "count" attribute in here, nor is this a
@@ -125,16 +127,16 @@ We do this so that calculating a per-tick case without having to run through 10k
 
 # Helpful Merchant Functions
 
-### Adding Ledgers Together
+### Summing Ledgers Together
 
-With Merchant, you can add an arbitrary number of ledgers together.
+With Merchant, you can sum an arbitrary number of ledgers together.
 
 ```js
-import { add } from "merchant.js";
+import { sum } from "merchant.js";
 
 // ...
 
-const ledger = add(ledgerOne, ledgerTwo, ledgerThree);
+const ledger = sum(ledgerOne, ledgerTwo, ledgerThree);
 ```
 
 ### Scaling Ledgers

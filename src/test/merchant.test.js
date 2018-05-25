@@ -1,56 +1,56 @@
 const {
-  add,
+  sum,
   scale,
   inTheBlack,
   inTheRed,
   currencies,
   totalOf,
   buy,
-  addItem,
-  pouchEffectsLedger,
+  add,
+  effects,
   cost,
   allCosts
 } = require("../index.js");
 const { Map, List } = require("immutable");
 
-describe("add", () => {
-  test("add will throw if the ledger is not a map", () => {
+describe("sum", () => {
+  test("sum will throw if the ledger is not a map", () => {
     expect(() => {
-      add({ cats: "dogs" });
+      sum({ cats: "dogs" });
     }).toThrow();
   });
 
-  test("add returns a blank ledger if we add nothing", () => {
-    const ledger = add();
+  test("sum returns a blank ledger if we add nothing", () => {
+    const ledger = sum();
 
     expect(ledger.size).toBe(0);
   });
 
-  test("add returns a blank ledger if we add an empty array", () => {
-    const ledger = add(...[]);
+  test("sum returns a blank ledger if we add an empty array", () => {
+    const ledger = sum(...[]);
 
     expect(ledger.size).toBe(0);
   });
 
-  test("add returns the same ledger if we only have one ledger", () => {
+  test("sum returns the same ledger if we only have one ledger", () => {
     const dummy = Map({ GOLD: 5 });
-    const ledger = add(dummy);
+    const ledger = sum(dummy);
 
     expect(ledger.equals(dummy)).toBe(true);
   });
 
-  test("adding two ledgers will add both of their currencies together", () => {
+  test("summing two ledgers will add both of their currencies together", () => {
     const one = Map({ GOLD: 5 });
     const two = Map({ GOLD: 2 });
-    const ledger = add(one, two);
+    const ledger = sum(one, two);
 
     expect(ledger.get("GOLD")).toBe(7);
   });
 
-  test("adding two uneven ledgers maintains both their currencies", () => {
+  test("summing two uneven ledgers maintains both their currencies", () => {
     const one = Map({ GOLD: 5 });
     const two = Map({ MAGIC_POWER: 2 });
-    const ledger = add(one, two);
+    const ledger = sum(one, two);
 
     expect(ledger.get("GOLD")).toBe(5);
     expect(ledger.get("MAGIC_POWER")).toBe(2);
@@ -199,37 +199,34 @@ describe("buy", () => {
   });
 });
 
-describe("addItem", () => {
+describe("add", () => {
   test("adding an item will update the wallet", () => {
-    const wallet = addItem({ type: "MagicSword" }, Map({}));
+    const wallet = add({ type: "MagicSword" }, Map({}));
     expect(wallet.get("MagicSword")).toBe(1);
   });
 
   test("adding more than one item updates the wallet", () => {
-    const wallet = addItem({ type: "MagicSword" }, Map({}), 5);
+    const wallet = add({ type: "MagicSword" }, Map({}), 5);
     expect(wallet.get("MagicSword")).toBe(5);
   });
 });
 
-describe("pouchEffectsLedger", () => {
-  test("pouchEffectsLedger returns an empty ledger if there are no items", () => {
-    expect(pouchEffectsLedger([], Map({})).size).toBe(0);
+describe("effects", () => {
+  test("effects returns an empty ledger if there are no items", () => {
+    expect(effects([], Map({})).size).toBe(0);
   });
 
-  test("pouchEffectsLedger returns an empty ledger if there are no items with 'effects'", () => {
+  test("effects returns an empty ledger if there are no items with 'effects'", () => {
     const MagicSword = {
       type: "MagicSword"
     };
 
-    const ledger = pouchEffectsLedger(
-      [MagicSword],
-      Map({ MagicSword: 2, Charm: 1 })
-    );
+    const ledger = effects([MagicSword], Map({ MagicSword: 2, Charm: 1 }));
 
     expect(ledger.size).toBe(0);
   });
 
-  test("pouchEffectsLedger returns a ledger with a combination of effects", () => {
+  test("effects returns a ledger with a combination of effects", () => {
     const MagicSword = {
       type: "MagicSword",
       effect: state => {
@@ -244,7 +241,7 @@ describe("pouchEffectsLedger", () => {
       }
     };
 
-    const ledger = pouchEffectsLedger(
+    const ledger = effects(
       [MagicSword, Charm],
       Map({ MagicSword: 2, Charm: 1 })
     );

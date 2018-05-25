@@ -10,18 +10,18 @@ const { maybe, throwIfCostNotFunc, throwIfNotMap } = require("./util");
  * const expensesLedger = Map({GOLD: -5});
  * const profitsLedger = Map({GOLD: 10, Silver: 3 });
  *
- * const total = add(wallet, expensesLedger, profitsLedger);
+ * const total = sum(wallet, expensesLedger, profitsLedger);
  * total.get("GOLD");   // 5
  * total.get("SILVER"); // 3
  *
  * @example
  * const ledgers = [wallet, expenses, profits];
- * const total = add(...ledgers);
+ * const total = sum(...ledgers);
  *
  * @param {Array<immutable.Map>} ledgers
  * @return {immutable.Map} a ledger combining all values
  */
-const add = (...ledgers) => {
+const sum = (...ledgers) => {
   if (!ledgers || ledgers.length === 0) {
     return Map({});
   }
@@ -61,6 +61,7 @@ const scale = (ledger, scale) => {
  * Returns true if all items in the ledger are positive.
  * @param {immutable.Map} ledger
  * @return {Boolean}
+ *
  */
 const inTheBlack = ledger => {
   throwIfNotMap(ledger, "inTheBlack");
@@ -115,7 +116,7 @@ const totalOf = (currency, ...ledgers) => {
   }
   throwIfNotMap(ledgers[0], "totalOf");
 
-  return maybe(add(...ledgers).get(currency), 0);
+  return maybe(sum(...ledgers).get(currency), 0);
 };
 
 /**
@@ -160,7 +161,7 @@ const allCosts = (items, state = {}) => {
  *   cost: state => Map({ GOLD: -(5 + state.marketPrice) })
  * }
  *
- * const wallet = Map({ GOLD: 10 });
+ * const wallet = new Map({ GOLD: 10 });
  * const state = { marketPrice : 1 };
  *
  * const newWallet = buy(MagicSword, wallet, state); // Gold => 4
@@ -187,7 +188,7 @@ const buy = (item, wallet, state = {}) => {
     }" returns something other than an Immutable.js Map.`
   );
 
-  return add(item.cost(state), wallet);
+  return sum(item.cost(state), wallet);
 };
 
 /**
@@ -195,9 +196,18 @@ const buy = (item, wallet, state = {}) => {
  * @param {Object} item
  * @param {immutable.Map} wallet
  * @param {Number} amount
+ *
+ * @example
+ * const MagicSword = {
+ *   type: "MagicSword"
+ * }
+ * const wallet = new Map({GOLD: 10})
+ *
+ * add(MagicSword, wallet);    // Map({GOLD: 10, MagicSword: 1})
+ * add(MagicSword, wallet, 3); // Map({GOLD: 10, MagicSword: 3})
  */
-const addItem = (item, wallet, amount = 1) => {
-  return add(wallet, Map({ [item.type]: amount }));
+const add = (item, wallet, amount = 1) => {
+  return sum(wallet, Map({ [item.type]: amount }));
 };
 
 /**
@@ -208,27 +218,38 @@ const addItem = (item, wallet, amount = 1) => {
  * @param {Array<Object>} items
  * @param {immutable.Map} wallet
  * @param {Object} state
+ *
+ * @example
+ * const pouch = {
+ *   MagicSword: {
+ *     type: "MagicSword",
+ *     effect: state => doSomething(state)
+ *   },
+ *   // ...
+ * }
+ *
+ * const ledger = effects(pouch, wallet, state);
  */
-const pouchEffectsLedger = (items, wallet, state = {}) => {
+const effects = (items, wallet, state = {}) => {
   const ledgers = items
     .map(item => {
       if (!item.effect) return;
       return scale(item.effect(state), maybe(wallet.get(item.type), 0));
     })
     .filter(n => n);
-  return add(...ledgers);
+  return sum(...ledgers);
 };
 
 module.exports = {
-  add,
+  sum,
   scale,
   inTheBlack,
   inTheRed,
   currencies,
   totalOf,
   buy,
-  addItem,
-  pouchEffectsLedger,
+  add,
+  effects,
   cost,
   allCosts
 };

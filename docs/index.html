@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>merchant.js 0.5.0 | Documentation</title>
+  <title>merchant.js 0.5.1 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>merchant.js</h3>
-          <div class='mb1'><code>0.5.0</code></div>
+          <div class='mb1'><code>0.5.1</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -25,9 +25,9 @@
               
                 
                 <li><a
-                  href='#add'
+                  href='#sum'
                   class="">
-                  add
+                  sum
                   
                 </a>
                 
@@ -115,9 +115,9 @@
               
                 
                 <li><a
-                  href='#additem'
+                  href='#add'
                   class="">
-                  addItem
+                  add
                   
                 </a>
                 
@@ -125,9 +125,9 @@
               
                 
                 <li><a
-                  href='#poucheffectsledger'
+                  href='#effects'
                   class="">
-                  pouchEffectsLedger
+                  effects
                   
                 </a>
                 
@@ -148,8 +148,8 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='add'>
-      add
+    <h3 class='fl m0' id='sum'>
+      sum
     </h3>
     
     
@@ -159,7 +159,7 @@
   <p>Adds an arbitrary amount of ledgers together.</p>
 
 
-  <div class='pre p1 fill-light mt0'>add</div>
+  <div class='pre p1 fill-light mt0'>sum</div>
   
   
 
@@ -207,13 +207,13 @@
 <span class="hljs-keyword">const</span> expensesLedger = <span class="hljs-built_in">Map</span>({<span class="hljs-attr">GOLD</span>: <span class="hljs-number">-5</span>});
 <span class="hljs-keyword">const</span> profitsLedger = <span class="hljs-built_in">Map</span>({<span class="hljs-attr">GOLD</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">Silver</span>: <span class="hljs-number">3</span> });
 
-<span class="hljs-keyword">const</span> total = add(wallet, expensesLedger, profitsLedger);
+<span class="hljs-keyword">const</span> total = sum(wallet, expensesLedger, profitsLedger);
 total.get(<span class="hljs-string">"GOLD"</span>);   <span class="hljs-comment">// 5</span>
 total.get(<span class="hljs-string">"SILVER"</span>); <span class="hljs-comment">// 3</span></pre>
     
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> ledgers = [wallet, expenses, profits];
-<span class="hljs-keyword">const</span> total = add(...ledgers);</pre>
+<span class="hljs-keyword">const</span> total = sum(...ledgers);</pre>
     
   
 
@@ -839,7 +839,7 @@ If the item is free, it just returns the same wallet.</p>
   <span class="hljs-attr">cost</span>: <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> <span class="hljs-built_in">Map</span>({ <span class="hljs-attr">GOLD</span>: -(<span class="hljs-number">5</span> + state.marketPrice) })
 }
 
-<span class="hljs-keyword">const</span> wallet = <span class="hljs-built_in">Map</span>({ <span class="hljs-attr">GOLD</span>: <span class="hljs-number">10</span> });
+<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>({ <span class="hljs-attr">GOLD</span>: <span class="hljs-number">10</span> });
 <span class="hljs-keyword">const</span> state = { <span class="hljs-attr">marketPrice</span> : <span class="hljs-number">1</span> };
 
 <span class="hljs-keyword">const</span> newWallet = buy(MagicSword, wallet, state); <span class="hljs-comment">// Gold =&gt; 4</span>
@@ -862,8 +862,8 @@ If the item is free, it just returns the same wallet.</p>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='additem'>
-      addItem
+    <h3 class='fl m0' id='add'>
+      add
     </h3>
     
     
@@ -873,7 +873,7 @@ If the item is free, it just returns the same wallet.</p>
   <p>Adds an item to the wallet</p>
 
 
-  <div class='pre p1 fill-light mt0'>addItem</div>
+  <div class='pre p1 fill-light mt0'>add</div>
   
   
 
@@ -923,6 +923,18 @@ If the item is free, it just returns the same wallet.</p>
   
 
   
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> MagicSword = {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">"MagicSword"</span>
+}
+<span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>({<span class="hljs-attr">GOLD</span>: <span class="hljs-number">10</span>})
+
+add(MagicSword, wallet);    <span class="hljs-comment">// Map({GOLD: 10, MagicSword: 1})</span>
+add(MagicSword, wallet, <span class="hljs-number">3</span>); <span class="hljs-comment">// Map({GOLD: 10, MagicSword: 3})</span></pre>
+    
+  
 
   
 
@@ -939,8 +951,8 @@ If the item is free, it just returns the same wallet.</p>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='poucheffectsledger'>
-      pouchEffectsLedger
+    <h3 class='fl m0' id='effects'>
+      effects
     </h3>
     
     
@@ -952,7 +964,7 @@ one big ledger. This is useful for caching the onUpdate effects to your
 wallet rather than computing them every time.</p>
 
 
-  <div class='pre p1 fill-light mt0'>pouchEffectsLedger</div>
+  <div class='pre p1 fill-light mt0'>effects</div>
   
   
 
@@ -1001,6 +1013,20 @@ wallet rather than computing them every time.</p>
 
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> pouch = {
+  <span class="hljs-attr">MagicSword</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">"MagicSword"</span>,
+    <span class="hljs-attr">effect</span>: <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> doSomething(state)
+  },
+  <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-keyword">const</span> ledger = effects(pouch, wallet, state);</pre>
+    
   
 
   
